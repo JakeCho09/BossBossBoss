@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-        // 입력이 없으면 굳이 아래의 복잡한 계산을 할 필요가 없으므로 컷! (최적화)
+ 
         if (h == 0 && v == 0) return;
 
 
@@ -42,5 +42,7 @@ public class PlayerController : MonoBehaviour
 
         Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+
     }
 }
