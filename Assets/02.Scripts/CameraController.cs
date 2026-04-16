@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public Transform target;     // 카메라가 따라다니고 회전할 중심점 (캐릭터)
-    public float distance = 5f;  // 캐릭터와 카메라 사이의 거리
+    public float distance = 2f;  // 캐릭터와 카메라 사이의 거리
     public float mouseSen = 2f;  // 마우스 감도
 
     private float mouseX;
