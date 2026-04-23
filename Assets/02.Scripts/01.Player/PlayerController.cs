@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -71,6 +72,7 @@ public class PlayerController : MonoBehaviour
 
         }
     }
+
 
     void HandleActionInput()
     {
@@ -225,7 +227,6 @@ public class PlayerController : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-        // 1. 카메라 기준의 입력 방향(moveInput) 먼저 계산
         Vector3 camForward = cameraTr.forward;
         Vector3 camRight = cameraTr.right;
         camForward.y = 0f;
@@ -237,21 +238,19 @@ public class PlayerController : MonoBehaviour
 
         float targetSpeed = 0f;
 
-        // 2. 입력이 있을 때만 회전하고, 목표 속도 세팅!
-        if (moveInput.sqrMagnitude > 0f)
+         
+        if (moveInput.sqrMagnitude > 0.01f)
         {
             targetSpeed = Input.GetKey(KeyCode.LeftShift) ? runSpeed : walkSpeed;
 
-            // 에러 해결의 핵심: 입력 방향이 (0,0,0)이 아닐 때만 LookRotation 실행!
+            
             Quaternion targetRotation = Quaternion.LookRotation(moveInput);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
-        // 3. 속도는 항상 Lerp로 부드럽게 가속/감속
+        
         currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, acceleration * Time.deltaTime);
 
-        // 4. 이동은 moveInput(키보드 방향)이 아니라 transform.forward(캐릭터가 쳐다보는 앞방향)으로!
-        // 이렇게 해야 키보드를 떼서 moveInput이 0이 되어도, 캐릭터가 마지막으로 보던 앞방향으로 서서히 미끄러지며 멈춤.
         if (currentSpeed > 0.1f)
         {
             rb.velocity = new Vector3(transform.forward.x * currentSpeed, rb.velocity.y, transform.forward.z * currentSpeed);
