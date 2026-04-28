@@ -20,7 +20,7 @@ public class BossPart_Collider : MonoBehaviour, IDamageable
 
             mainHealth.TakeDamage(finalDamage, hitPoint, poiseDamage);
 
-            Debug,Log($"[{gameObject.name}] 부위 피격! 배율: {damageMultiplier}x ➡️ 깎인 체력: {finalDamage}");
+            Debug.Log($"[{gameObject.name}] 부위 피격! 배율: {damageMultiplier}x ➡️ 깎인 체력: {finalDamage}");
         }
         else
         {
